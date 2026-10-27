@@ -4,6 +4,7 @@
     df = pd.read_csv(RAW / "census_1900_2026-10-20.csv")
 """
 import os
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -17,6 +18,7 @@ def _read_env(path):
             line = line.strip()
             if line and not line.startswith("#") and "=" in line:
                 key, value = line.split("=", 1)
+                value = re.split(r"\s#", value, maxsplit=1)[0]  # drop a comment after the value
                 values[key.strip()] = value.strip().strip('"').strip("'")
     return values
 
