@@ -31,8 +31,23 @@ def environment():
     return env
 
 
+def log_file(step):
+    """code/01_build/01_clean.do -> output/logs/01_build__01_clean.log"""
+    return LOGS / ("__".join(Path(step).relative_to("code").with_suffix("").parts) + ".log")
+
+
 def run_python(step, env):
-    subprocess.run([sys.executable, str(ROOT / step)], cwd=ROOT, env=env, check=True)
+    # Show the output as it comes, and keep a copy in output/logs.
+    command = [sys.executable, "-u", str(ROOT / step)]
+    env = dict(env, PYTHONIOENCODING="utf-8")  # same characters on Windows and Mac
+    with open(log_file(step), "w", encoding="utf-8") as log:
+        process = subprocess.Popen(command, cwd=ROOT, env=env, encoding="utf-8", errors="replace",
+                                   stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        for line in process.stdout:
+            print(line, end="", flush=True)
+            log.write(line)
+    if process.wait():
+        raise subprocess.CalledProcessError(process.returncode, command)
 
 
 def run_stata(step, env):
@@ -44,7 +59,7 @@ def run_stata(step, env):
     # Batch mode writes <name>.log into the project root; keep it in output/logs.
     log = ROOT / (Path(step).stem + ".log")
     if log.exists():
-        log = log.replace(LOGS / log.name)
+        log = log.replace(log_file(step))
         # Stata can exit with code 0 even after an error, so read the log.
         if re.search(r"^r\(\d+\);", log.read_text(errors="replace"), re.MULTILINE):
             sys.exit(f"{step} stopped with an error; see {log.relative_to(ROOT)}")
