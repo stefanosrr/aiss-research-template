@@ -2,6 +2,7 @@
 
     uv run python run.py           # every step
     uv run python run.py build     # only steps whose path contains "build"
+    uv run python run.py 01_import # just that script
 """
 import os
 import re
