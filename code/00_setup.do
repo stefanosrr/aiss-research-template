@@ -6,7 +6,7 @@ version 18                 // the lab's Stata version: results stay identical on
 clear all
 set more off
 set varabbrev off          // no silent abbreviation of variable names
-set seed 20261020          // set once per project, then never change it
+set seed 20261020          // set once per project, then never change it; same as SEED in code/lib/settings.py
 
 * Project root and folders
 global ROOT "`c(pwd)'"

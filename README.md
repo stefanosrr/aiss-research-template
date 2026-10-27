@@ -54,7 +54,7 @@ code/
   00_setup.do    Stata settings; every do-file runs it first
   01_build/      raw → clean (no estimation)
   02_analysis/   clean → output (reads only data/clean)
-  lib/           shared Python functions, including paths.py
+  lib/           shared Python functions, including paths.py and settings.py (the seed)
   ado/           project-local Stata packages, committed
 
 output/          written by code only, never by hand
