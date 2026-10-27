@@ -4,9 +4,11 @@ Every dataset the project uses has an entry here **before** any code reads it. T
 
 Rules for `raw/`: files stay exactly as received. Never edit them, never re-save them from Excel, never overwrite them. A new download gets a new file with the date in its name, e.g. `census_1900_2026-10-20.csv`.
 
-| File in `raw/` | Source and link | Downloaded (date, by) | Licence and access | Notes |
-|:--|:--|:--|:--|:--|
-| [census_1900_2026-10-20.csv] | [IPUMS USA, 1900 full count] | [2026-10-20, name] | [IPUMS terms; no redistribution] | [extract settings, variables] |
+Mark a source **yes** under *Personal or restricted?* if it contains information about identifiable people or comes with access restrictions. Before such data is sent to an external API (an LLM call, or an AI agent reading it), the researcher is told and decides.
+
+| File in `raw/` | Source and link | Downloaded (date, by) | Licence and access | Personal or restricted? | Notes |
+|:--|:--|:--|:--|:--|:--|
+| [census_1900_2026-10-20.csv] | [IPUMS USA, 1900 full count] | [2026-10-20, name] | [IPUMS terms; no redistribution] | [no] | [extract settings, variables] |
 
 ## LLM outputs (`llm_cache/`)
 
